@@ -34,7 +34,7 @@ type Pending = {
 	timer: ReturnType<typeof setTimeout> | null;
 };
 
-const DEFAULT_URL = "ws://clearnet.yellow.com/ws";
+const DEFAULT_URL = "wss://clearnet.yellow.com/ws";
 
 export class Client {
 	private url: string;

@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { Client } from "../../src/Client";
 
-const WS_URL = process.env.YELLOW_WS_URL || "ws://clearnet.yellow.com/ws";
+const WS_URL = process.env.YELLOW_WS_URL || "wss://clearnet.yellow.com/ws";
 const suite =
 	(process.env.YELLOW_E2E === "1" ||
 		process.env.YELLOW_E2E === "true" ||
