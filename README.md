@@ -23,8 +23,8 @@ CommonJS:
 const { Client } = require("yellow-ts");
 
 async function main() {
-  // Defaults to ws://clearnet.yellow.com/ws if url is omitted
-  const client = new Client({ url: "wss://clearnet.yellow.com/ws" });
+  // Defaults to wss://clearnet.yellow.com/ws if url is omitted
+  const client = new Client({ url: "wss://clearnet.yellow.com/ws" })
   await client.connect();
 
   console.log(response);
@@ -40,7 +40,7 @@ ESM / TypeScript:
 import { Client } from "yellow-ts";
 
 const client = new Client({
-  // url optional; defaults to ws://clearnet.yellow.com/ws
+  // url optional; defaults to wss://clearnet.yellow.com/ws
   url: "wss://clearnet.yellow.com/ws",
   requestTimeoutMs: 30_000,
   backoff: { initialDelayMs: 1000, maxDelayMs: 30_000 }
@@ -77,7 +77,7 @@ npm run build
 
 ### Acceptance tests
 
-These tests connect to a live Yellow clearnet websocket. By default they use `ws://clearnet.yellow.com/ws`. To run them, set `YELLOW_E2E=1` (or provide `YELLOW_WS_URL`). You can also override the command and params:
+These tests connect to a live Yellow clearnet websocket. By default they use `wss://clearnet.yellow.com/ws`. To run them, set `YELLOW_E2E=1` (or provide `YELLOW_WS_URL`). You can also override the command and params:
 
 ```bash
 # Enable acceptance tests
