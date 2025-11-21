@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeAll, afterAll } from "vitest";
 import { Client } from "../../src/Client";
+import { RPCMethod } from "@erc7824/nitrolite";
 
 const WS_URL = process.env.YELLOW_WS_URL || "wss://clearnet.yellow.com/ws";
 const suite =
@@ -81,7 +82,7 @@ suite("Yellow clearnet acceptance", () => {
 		expect(typeof removeListener).toBe("function");
 
 		// Test that we can call listen with event filter
-		const removeListener2 = client!.listen("someEvent", callback);
+		const removeListener2 = client!.listen(RPCMethod.GetChannels, callback);
 		expect(typeof removeListener2).toBe("function");
 
 		// Test removing listeners

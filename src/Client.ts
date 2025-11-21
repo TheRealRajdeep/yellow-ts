@@ -1,18 +1,21 @@
 import { ExponentialBackoff, Websocket, WebsocketBuilder } from "websocket-ts";
-import * as nitrolite from "@erc7824/nitrolite";
+import {
+	NitroliteClient,
+	RPCMethod,
+	parseRPCResponse,
+	type CreateChannelParams,
+	type CheckpointChannelParams,
+	type ChallengeChannelParams,
+	type ResizeChannelParams,
+	type CloseChannelParams,
+	type ChannelId,
+	type State,
+	type Hash,
+	type AccountInfo,
+	type NitroliteClientConfig
+} from "@erc7824/nitrolite";
 
-// Type definitions for nitrolite (since they're not exported)
-type NitroliteClientType = any;
-type CreateChannelParams = any;
-type CheckpointChannelParams = any;
-type ChallengeChannelParams = any;
-type ResizeChannelParams = any;
-type CloseChannelParams = any;
-type ChannelId = any;
-type State = any;
-type Hash = any;
-type AccountInfo = any;
-type NitroliteClientConfig = any;
+import * as nitrolite from "@erc7824/nitrolite";
 
 export type Json = null | boolean | number | string | Json[] | { [key: string]: Json };
 
@@ -68,7 +71,7 @@ export class Client {
 	private nextId = 1;
 	private pendingById: Map<number, Pending> = new Map();
 	private listeners: Array<{ event?: string; callback: Function }> = [];
-	private nitroliteClient?: NitroliteClientType;
+	private nitroliteClient?: NitroliteClient;
 	private builder: WebsocketBuilder;
 
 	constructor(options?: ClientOptions) {
@@ -87,7 +90,7 @@ export class Client {
 
 		// Initialize nitrolite client if configuration is provided
 		if (options?.nitrolite) {
-			this.nitroliteClient = new (nitrolite as any).NitroliteClient(options.nitrolite);
+			this.nitroliteClient = new NitroliteClient(options.nitrolite);
 		}
 
 		this.builder = new WebsocketBuilder(this.url)
@@ -165,15 +168,17 @@ export class Client {
 	 * @param callback Function to call when a message is received.
 	 * @returns A function to remove the listener.
 	 */
-	listen(event: string | undefined, callback: Function): () => void;
-	listen(callback: Function): () => void;
-	listen(eventOrCallback: string | Function | undefined, callback?: Function): () => void {
+
+	listen(eventOrCallback: RPCMethod | Function | undefined, callback?: Function): () => void {
+
 		let event: string | undefined;
 		let cb: Function;
 
 		if (typeof eventOrCallback === 'function') {
 			cb = eventOrCallback;
 		} else {
+
+			console.log("EVENT & CALLBACK", eventOrCallback)
 			event = eventOrCallback;
 			cb = callback!;
 		}
@@ -466,13 +471,16 @@ export class Client {
 
 		// Parse with nitrolite and call listeners
 		try {
-			const rpcMessage = (nitrolite as any).parseRPCResponse(data);
+			const rpcMessage = parseRPCResponse(JSON.parse(data));(data); 
+			const response: Response = (nitrolite as any).parseAnyRPCResponse(JSON.stringify(data));
+			
 
 			// Call listeners
 			for (const listener of this.listeners) {
 				try {
+					console.log("LISTENER EVENT", listener.event)
 					if (!listener.event || (rpcMessage as any)?.type === listener.event || (rpcMessage as any)?.event === listener.event) {
-						listener.callback(rpcMessage);
+						listener.callback(response);
 					}
 				} catch (error) {
 					// Don't let listener errors break other listeners
@@ -484,7 +492,9 @@ export class Client {
 			for (const listener of this.listeners) {
 				try {
 					if (!listener.event) {
-						listener.callback(parsed);
+						const response = (nitrolite as any).parseAnyRPCResponse(JSON.stringify(parsed));
+						console.log("RESPONSE", response)
+						listener.callback(response);
 					}
 				} catch (error) {
 					console.warn('Listener error:', error);

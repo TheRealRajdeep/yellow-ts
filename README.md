@@ -37,7 +37,7 @@ main();
 ESM / TypeScript:
 
 ```ts
-import { Client } from "yellow-ts";
+import { Client, nitrolite } from "yellow-ts";
 
 const client = new Client({
   // url optional; defaults to wss://clearnet.yellow.com/ws
@@ -61,7 +61,7 @@ const removeListener = client.listen((message) => {
 });
 
 // Listen for specific event types (if supported by the server)
-const removeFilteredListener = client.listen("ledger", (message) => {
+const removeFilteredListener = client.listen(nitrolite.RPCMethod.GetChannels, (message) => {
   console.log("📊 Ledger update:", message);
 });
 
