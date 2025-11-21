@@ -178,7 +178,6 @@ export class Client {
 			cb = eventOrCallback;
 		} else {
 
-			console.log("EVENT & CALLBACK", eventOrCallback)
 			event = eventOrCallback;
 			cb = callback!;
 		}
@@ -478,7 +477,6 @@ export class Client {
 			// Call listeners
 			for (const listener of this.listeners) {
 				try {
-					console.log("LISTENER EVENT", listener.event)
 					if (!listener.event || (rpcMessage as any)?.type === listener.event || (rpcMessage as any)?.event === listener.event) {
 						listener.callback(response);
 					}
@@ -493,7 +491,6 @@ export class Client {
 				try {
 					if (!listener.event) {
 						const response = (nitrolite as any).parseAnyRPCResponse(JSON.stringify(parsed));
-						console.log("RESPONSE", response)
 						listener.callback(response);
 					}
 				} catch (error) {
@@ -503,5 +500,3 @@ export class Client {
 		}
 	}
 }
-
-
