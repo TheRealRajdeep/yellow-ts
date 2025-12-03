@@ -1,6 +1,6 @@
 {
   "name": "yellow-ts",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "TypeScript SDK wrapping @erc7824/nitrolite with websocket-ts (reconnect + backoff), providing an xrpl.js-like interface.",
   "keywords": [
     "xrpl",
@@ -42,7 +42,8 @@
     "test:watch": "vitest"
   },
   "dependencies": {
-    "@erc7824/nitrolite": "^0.5.0",
+    "-": "^0.0.1",
+    "@erc7824/nitrolite": "^0.5.1",
     "websocket-ts": "^2.0.0",
     "ws": "^8.18.0"
   },

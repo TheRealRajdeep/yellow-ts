@@ -2,15 +2,20 @@
 # yarn lockfile v1
 
 
+"-@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.npmjs.org/-/-/--0.0.1.tgz"
+  integrity sha512-3HfneK3DGAm05fpyj20sT3apkNcvPpCuccOThOPdzz8sY7GgQGe0l93XH9bt+YzibcTIgUAIMoyVJI740RtgyQ==
+
 "@adraffy/ens-normalize@^1.11.0":
   version "1.11.1"
   resolved "https://registry.npmjs.org/@adraffy/ens-normalize/-/ens-normalize-1.11.1.tgz"
   integrity sha512-nhCBV3quEgesuf7c7KYfperqSS14T8bYuvJ8PcLJp6znkZpFc0AuW4qBtr8eKVyPPe/8RSr7sglCWPU5eaxwKQ==
 
-"@erc7824/nitrolite@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.npmjs.org/@erc7824/nitrolite/-/nitrolite-0.5.0.tgz"
-  integrity sha512-HZZe6GX2EDohM3B2VZE3P+F0572lhYlCx5fWOtKW30hnLdWSWbyw6F9s7OCMEv01rIM1UX4JOelHEfq1eXxnBw==
+"@erc7824/nitrolite@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.npmjs.org/@erc7824/nitrolite/-/nitrolite-0.5.1.tgz"
+  integrity sha512-ZDxeEax+TY8kp8gYBETyNs4BoXCSu4ymCO6XFHu+eLCzCWJgVV26XVvpaPBryXr0imHZGn0m5x334Rr6k/CD4g==
   dependencies:
     abitype "^1.1.1"
     viem "^2.38.5"
