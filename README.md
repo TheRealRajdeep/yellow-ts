@@ -91,9 +91,30 @@ await client.disconnect();
 - `connect(): Promise<void>`
 - `disconnect(code?: number, reason?: string): Promise<void>`
 - `request<T = any>(request: RequestObject): Promise<T>`
-- `sendMessage(message: any): Promise<void>` - Send a raw message over websocket (no response expected)
+- `sendMessage(message: any): Promise<T | void>` - Send a raw message over websocket. If the message contains an `id` field, awaits and returns the response with the matching id.
 - `listen(event?: string, callback: Function): () => void` - Listen for messages. Returns a function to remove the listener.
 
+#### Awaiting Responses with `sendMessage`
+
+When you send a message that includes a request `id`, `sendMessage` will automatically wait for the corresponding response and return it:
+
+```typescript
+import { Client } from "yellow-ts";
+import { createGetConfigMessage, createEIP712AuthMessageSigner } from "@erc7824/nitrolite";
+
+const client = new Client();
+await client.connect();
+
+// Create a signed message with a request ID
+const requestId = 12345;
+const message = createGetConfigMessage(signer, requestId);
+
+// sendMessage detects the id and awaits the matching response
+const response = await client.sendMessage(message);
+console.log(response); // Response with id: 12345
+```
+
+If the message does not contain an `id` field, `sendMessage` sends the message without waiting for a response (fire-and-forget).
 
 On disconnect, all in-flight requests are rejected. Reconnect is automatic via `websocket-ts`.
 
